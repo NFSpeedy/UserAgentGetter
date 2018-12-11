@@ -1,0 +1,8 @@
+README.md
+setup.py
+UserAgentGetter/UserAgentGetter.py
+UserAgentGetter/__init__.py
+UserAgentGetter.egg-info/PKG-INFO
+UserAgentGetter.egg-info/SOURCES.txt
+UserAgentGetter.egg-info/dependency_links.txt
+UserAgentGetter.egg-info/top_level.txt
