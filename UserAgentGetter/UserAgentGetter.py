@@ -1,10 +1,10 @@
-import requests as re, json, time, random
+import requests as re, json, time, random, os
 from bs4 import BeautifulSoup as bs
 from pprint import pprint
 
 class UserAgentGetter(object):
     """UserAgentGetter is a simple package which provides"""
-    def newUA(self):
+    def newUA():
         data = {}
         resp = re.get("https://techblog.willshouse.com/2012/01/03/most-common-user-agents/", params={
             'Host':'techblog.willshouse.com',
@@ -22,24 +22,30 @@ class UserAgentGetter(object):
             data[i]=row.text
             i+=1
         data['time'] = time.time()
-        file = open("/home/bannerblue/fakeUserAgent/newFakeUserAgent/ua.json", "w+")
+        file = open(os.path.join(os.path.dirname(__file__), "ua.json"), "w+")
         file.write(json.dumps(data))
         file.close()
-    def UA(self):
-        try:
-            ua = json.loads(open("/home/bannerblue/fakeUserAgent/newFakeUserAgent/ua.json", "r").read().close())
-        except:
+    def UA():
+        #try:
+        json_ua = open(os.path.join(os.path.dirname(__file__), 'ua.json'), "r")
+        ua = json.loads(json_ua.read())
+        json_ua.close()
+        #except:
+         #   print("except")
+          #  self.newUA()
+           # file = open("ua.json", "r")
+            #ua = json.loads(file.read())
+            #file.close()
+        #print(ua['time']+3*30*24*60*60 < time.time())
+        if ua['time']+3*30*24*60*60 < time.time():
+        #if ua['time']+60 < time.time():
+            print("getting new UAs")
             self.newUA()
-            file = open("/home/bannerblue/fakeUserAgent/newFakeUserAgent/ua.json", "r")
-            ua = json.loads(file.read())
-            file.close()
+        i = str(random.randint(0,len(ua)-2))
+        print(i)
+        return ua[i]
+        # return ua[str(0)]
 
-        # if ua['time']+3*30*24*60*60 < time.time():
-        if ua['time']+60 < time.time():
-            self.newUA()
-        return ua[str(random.randint(0,len(ua)))]
+#ua = UserAgentGetter()
 
-
-ua = UserAgentGetter()
-
-print(ua.UA())
+#print(ua.UA())
